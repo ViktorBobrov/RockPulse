@@ -32,28 +32,53 @@ export default function Display() {
 
   return (
     <React.Fragment>
-      <h1 className="">{"монитор механика"}</h1>
-      <div className="flex pl-[2vh]  gap-[4vh]">
-        <div className=" flex flex-col gap-[20px] border  ">
-          {context.cards.map((card) => (
-            <div
-              key={card.id}
-              onClick={() => {
-                setSelectedCard(card);
-              }}
-            >
-              <h3>{card.name}</h3>
+      <div className="w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <h1 className="mb-6 text-2xl font-bold text-slate-100 sm:text-3xl lg:text-4xl">
+          {"монитор механика"}
+        </h1>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] ">
+          <div className="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-800 p-4 shadow-lg">
+            {context.cards.map((card) => (
+              <div
+                className="flex cursor-pointer flex-col gap-2 rounded-xl border border-slate-600 bg-slate-900 p-4 transition hover:border-amber-500 hover:bg-slate-800"
+                key={card.id}
+                onClick={() => {
+                  setSelectedCard(card);
+                }}
+              >
+                <h3 className="text-base font-semibold text-slate-100 sm:text-lg">
+                  {card.name}
+                </h3>
 
-              <p>{card.engine}</p>
-              <p>{card.hydraulic}</p>
-              <p>{card.load}</p>
-            </div>
-          ))}
-        </div>
-        <div>
-          {selectedCard != null && (
-            <div className="rightPlace">{selectedCard.id} </div>
-          )}
+                <p className="text-sm font-medium text-slate-400">
+                  {card.status}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div>
+            {selectedCard != null && (
+              <div className="rounded-2xl border border-amber-500 bg-slate-800 p-5 shadow-lg sm:p-6">
+                <h3 className="mb-4 text-2xl font-bold text-slate-100">
+                  {" "}
+                  Машина:{selectedCard.name}
+                </h3>
+                <p className="mb-2 text-sm text-slate-300 sm:text-base">
+                  статус:{selectedCard.status}{" "}
+                </p>
+                <p className="mb-2 text-sm text-slate-300 sm:text-base">
+                  температура двигателя:{selectedCard.engine}{" "}
+                </p>
+                <p className="mb-2 text-sm text-slate-300 sm:text-base">
+                  температура гидр.жидкости:{selectedCard.hydraulic}{" "}
+                </p>
+                <p className="text-sm text-slate-300 sm:text-base">
+                  нагрузка:{selectedCard.load}{" "}
+                </p>
+                {}{" "}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </React.Fragment>

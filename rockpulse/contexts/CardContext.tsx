@@ -37,7 +37,7 @@ export const CardContextProvider = ({
       engine: 160,
       hydraulic: 120,
       load: 700,
-      status: "inWork",
+      status: "stopped",
     },
   ]);
 
