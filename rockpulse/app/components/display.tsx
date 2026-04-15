@@ -1,6 +1,7 @@
 "use client";
 import { CardContext } from "@/contexts/CardContext";
 import React, { useContext, useState } from "react";
+import MaschineList from "./MachineList";
 
 /*0) первая страницаа монитора механия,по идее тут мне нужна первая вкладка сразу надо прокинуть роутинг
 1) сделать поля "текущая/допустимая гидравлика" и отрисовывать восклицательный знак исходя из этого условия
@@ -37,25 +38,12 @@ export default function Display() {
           {"монитор механика"}
         </h1>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] ">
-          <div className="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-800 p-4 shadow-lg">
-            {context.cards.map((card) => (
-              <div
-                className="flex cursor-pointer flex-col gap-2 rounded-xl border border-slate-600 bg-slate-900 p-4 transition hover:border-amber-500 hover:bg-slate-800"
-                key={card.id}
-                onClick={() => {
-                  setSelectedCard(card);
-                }}
-              >
-                <h3 className="text-base font-semibold text-slate-100 sm:text-lg">
-                  {card.name}
-                </h3>
+          <MaschineList
+            cards={context.cards}
+            selectedCard={selectedCard}
+            onSelect={setSelectedCard}
+          />
 
-                <p className="text-sm font-medium text-slate-400">
-                  {card.status}
-                </p>
-              </div>
-            ))}
-          </div>
           <div>
             {selectedCard != null && (
               <div className="rounded-2xl border border-amber-500 bg-slate-800 p-5 shadow-lg sm:p-6">

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Display from "./components/display";
+
 import { CardContext, CardContextProvider } from "../contexts/CardContext";
+import MaschineList from "./components/MachineList";
 
 export default function Home() {
   return (
