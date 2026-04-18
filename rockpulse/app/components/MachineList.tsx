@@ -20,6 +20,12 @@ export default function MaschineList({
   selectedCard,
   onSelect,
 }: MachineListProps) {
+  const [form, setForm] = useState({
+    name: "",
+    hydraulic: 0,
+    engine: 0,
+    load: 0,
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setCards } = useContext(CardContext);
   return (
@@ -57,6 +63,55 @@ export default function MaschineList({
             <h2 className="mb-4 text-xl font-bold text-white">
               Добавить машину
             </h2>
+            <label className="flex flex-col gap-1">
+              <span className="text-sm text-slate-400">название машины</span>
+              <input
+                className="w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-white placeholder:text-slate-500 focus:border-amber-500 focus:outline-none"
+                placeholder="Название машины"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+              />
+            </label>
+            <label className="flex flex-col gap-1">
+              <span className="text-sm text-slate-400">
+                {" "}
+                температура двигателя
+              </span>
+              <input
+                className="w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-white placeholder:text-slate-500 focus:border-amber-500 focus:outline-none"
+                type="number"
+                value={form.engine}
+                onChange={(e) =>
+                  setForm({ ...form, engine: Number(e.target.value) })
+                }
+              />
+            </label>
+            <label className="flex flex-col gap-1">
+              <span className="text-sm text-slate-400"> нагрузка </span>
+              <input
+                className="w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-white placeholder:text-slate-500 focus:border-amber-500 focus:outline-none"
+                type="number"
+                value={form.load}
+                onChange={(e) =>
+                  setForm({ ...form, load: Number(e.target.value) })
+                }
+              />{" "}
+            </label>
+            <label className="flex flex-col gap-1">
+              <span className="text-sm text-slate-400">
+                {" "}
+                уговень гидравлики{" "}
+              </span>
+
+              <input
+                className="w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-white placeholder:text-slate-500 focus:border-amber-500 focus:outline-none"
+                type="number"
+                value={form.hydraulic}
+                onChange={(e) =>
+                  setForm({ ...form, hydraulic: Number(e.target.value) })
+                }
+              />
+            </label>
 
             <button
               onClick={() => setIsModalOpen(false)}
@@ -70,14 +125,18 @@ export default function MaschineList({
                   ...prev,
                   {
                     id: Date.now(),
-                    name: "Новая машина",
-                    engine: 0,
-                    hydraulic: 0,
-                    load: 0,
+                    ...form,
+                    name: form.name || "Без названия",
+
                     status: "new",
                   },
                 ]);
-
+                setForm({
+                  name: "",
+                  hydraulic: 0,
+                  engine: 0,
+                  load: 0,
+                });
                 setIsModalOpen(false);
               }}
               className="mt-2 w-full rounded-lg bg-amber-500 px-4 py-2 text-slate-900 hover:bg-amber-400"
