@@ -69,6 +69,7 @@ export default function Display() {
           </div>
         </div>
       </div>
+      console.log(selectedCard);
     </React.Fragment>
   );
 }
