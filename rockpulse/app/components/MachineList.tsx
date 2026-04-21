@@ -2,6 +2,7 @@
 import { CardContext } from "@/contexts/CardContext";
 import React, { useContext, useState } from "react";
 import MaschineModal from "./MaschineModal";
+import MachineCard from "./MachineCard";
 export type Card = {
   name: string;
   id: number;
@@ -36,46 +37,22 @@ export default function MaschineList({
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-800 p-4 shadow-lg">
       {cards.map((card) => (
-        <div
-          className="flex cursor-pointer items-start justify-between gap-2 rounded-xl border border-slate-600 bg-slate-900 p-4 transition hover:border-amber-500 hover:bg-slate-800"
+        <MachineCard
           key={card.id}
-          onClick={() => onSelect(card)}
-        >
-          <div className=" flex flex-col gap-2">
-            <h3 className="text-base font-semibold text-slate-100 sm:text-lg">
-              {card.name}
-            </h3>
-            <p className="text-sm font-medium text-slate-400">{card.status}</p>
-          </div>
-
-          <div className="flex flex-col gap-[10px]">
-            <button
-              className=" top-2 right-2 flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 hover:bg-amber-500 hover:text-slate-900 transition"
-              onClick={(e) => {
-                e.stopPropagation();
-                setEditingCard(card);
-                setForm({
-                  name: card.name,
-                  hydraulic: card.hydraulic,
-                  engine: card.engine,
-                  load: card.load,
-                });
-                setIsModalOpen(true);
-              }}
-            >
-              ✏️
-            </button>
-            <button
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 hover:bg-red-500 hover:text-white transition"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDelete(card.id);
-              }}
-            >
-              🗑️
-            </button>
-          </div>
-        </div>
+          card={card}
+          onSelect={onSelect}
+          onEdit={(card) => {
+            setEditingCard(card);
+            setForm({
+              name: card.name,
+              hydraulic: card.hydraulic,
+              engine: card.engine,
+              load: card.load,
+            });
+            setIsModalOpen(true);
+          }}
+          onDelete={handleDelete}
+        />
       ))}
       <div className="mt-4">
         <button
