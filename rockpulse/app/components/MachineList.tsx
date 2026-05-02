@@ -3,6 +3,8 @@ import { CardContext } from "@/contexts/CardContext";
 import React, { useContext, useState } from "react";
 import MaschineModal from "./MaschineModal";
 import MachineCard from "./MachineCard";
+import { MachineStatus } from "../types/status";
+
 export type Card = {
   name: string;
   id: number;
@@ -13,13 +15,13 @@ export type Card = {
 };
 type MachineListProps = {
   cards: Card[];
-  selectedCard: Card | null;
+  selectedCardId: number | null;
   onSelect: (card: Card) => void;
 };
 
 export default function MaschineList({
   cards,
-  selectedCard,
+  selectedCardId,
   onSelect,
 }: MachineListProps) {
   const [form, setForm] = useState({
@@ -27,6 +29,7 @@ export default function MaschineList({
     hydraulic: 0,
     engine: 0,
     load: 0,
+    status: MachineStatus.WORK,
   });
   const handleDelete = (id: number) => {
     setCards((prev) => prev.filter((card) => card.id !== id));
@@ -48,6 +51,7 @@ export default function MaschineList({
               hydraulic: card.hydraulic,
               engine: card.engine,
               load: card.load,
+              status: MachineStatus.WORK,
             });
             setIsModalOpen(true);
           }}
@@ -59,7 +63,13 @@ export default function MaschineList({
           className="w-full rounded-xl border border-dashed border-slate-600 p-3 text-slate-400 hover:border-amber-500 hover:text-amber-400 transition"
           onClick={() => {
             setEditingCard(null);
-            setForm({ name: "", hydraulic: 0, engine: 0, load: 0 });
+            setForm({
+              name: "",
+              hydraulic: 0,
+              engine: 0,
+              load: 0,
+              status: MachineStatus.WORK,
+            });
             setIsModalOpen(true);
           }}
         >

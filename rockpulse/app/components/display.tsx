@@ -2,6 +2,8 @@
 import { CardContext } from "@/contexts/CardContext";
 import React, { useContext, useState } from "react";
 import MaschineList from "./MachineList";
+import { statusConfig } from "../types/statusConfig";
+import { MachineStatus } from "../types/status";
 
 /*0) первая страницаа монитора механия,по идее тут мне нужна первая вкладка сразу надо прокинуть роутинг
 1) сделать поля "текущая/допустимая гидравлика" и отрисовывать восклицательный знак исходя из этого условия
@@ -24,12 +26,15 @@ export type Card = {
   engine: number;
   hydraulic: number;
   load: number;
-  status: string;
+  status: MachineStatus;
 };
 
 export default function Display() {
   const context = useContext(CardContext);
-  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+
+  const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
+
+  const selectedCard = context.cards.find((card) => card.id === selectedCardId);
 
   return (
     <React.Fragment>
@@ -40,8 +45,8 @@ export default function Display() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] ">
           <MaschineList
             cards={context.cards}
-            selectedCard={selectedCard}
-            onSelect={setSelectedCard}
+            selectedCardId={selectedCardId}
+            onSelect={(card) => setSelectedCardId(card.id)}
           />
 
           <div>
@@ -51,8 +56,8 @@ export default function Display() {
                   {" "}
                   Машина:{selectedCard.name}
                 </h3>
-                <p className="mb-2 text-sm text-slate-300 sm:text-base">
-                  статус:{selectedCard.status}{" "}
+                <p className={statusConfig[selectedCard.status].color}>
+                  статус: {statusConfig[selectedCard.status].label}
                 </p>
                 <p className="mb-2 text-sm text-slate-300 sm:text-base">
                   температура двигателя:{selectedCard.engine}{" "}

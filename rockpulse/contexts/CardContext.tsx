@@ -1,5 +1,6 @@
 "use client";
 import { Card } from "@/app/components/display";
+import { MachineStatus } from "@/app/types/status";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 
 export const CardContext = createContext(
@@ -21,7 +22,7 @@ export const CardContextProvider = ({
       engine: 160,
       hydraulic: 120,
       load: 16,
-      status: "inWork",
+      status: MachineStatus.WORK,
     },
     {
       name: "SBH-250",
@@ -29,7 +30,7 @@ export const CardContextProvider = ({
       engine: 160,
       hydraulic: 120,
       load: 44,
-      status: "inWork",
+      status: MachineStatus.WORK,
     },
     {
       name: "SBH-250",
@@ -37,7 +38,7 @@ export const CardContextProvider = ({
       engine: 160,
       hydraulic: 120,
       load: 700,
-      status: "stopped",
+      status: MachineStatus.STOPPED,
     },
   ]);
 

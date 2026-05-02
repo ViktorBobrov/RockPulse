@@ -1,12 +1,15 @@
 "use client";
 import React from "react";
 import { Card } from "@/app/types/card";
+import { MachineStatus } from "../types/status";
+import { statusConfig } from "../types/statusConfig";
 
 type FormType = {
   name: string;
   hydraulic: number;
   engine: number;
   load: number;
+  status: MachineStatus;
 };
 
 type MachineModalProps = {
@@ -79,6 +82,26 @@ export default function MaschineModal({
             }
           />
         </label>
+        <label className="flex flex-col gap-[1px]">
+          <span className="text-sm text-slate-400">Статус</span>
+
+          <select
+            className="w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-white focus:border-amber-500 focus:outline-none"
+            value={form.status}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                status: e.target.value as MachineStatus,
+              })
+            }
+          >
+            {Object.values(MachineStatus).map((status) => (
+              <option key={status} value={status}>
+                {statusConfig[status].label}
+              </option>
+            ))}
+          </select>
+        </label>
 
         <button
           onClick={() => setIsModalOpen(false)}
@@ -109,7 +132,7 @@ export default function MaschineModal({
                   id: Date.now(),
                   ...form,
                   name: form.name.trim() || "Без названия",
-                  status: "new",
+                  status: MachineStatus.WORK,
                 },
               ]);
             }
@@ -119,6 +142,7 @@ export default function MaschineModal({
               hydraulic: 0,
               engine: 0,
               load: 0,
+              status: card.status,
             });
 
             setEditingCard(null);

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Card } from "../types/card";
+import { statusConfig } from "../types/statusConfig";
 type MachineCardProps = {
   card: Card;
   onSelect: (card: Card) => void;
@@ -23,7 +24,9 @@ export default function MachineCard({
         <h3 className="text-base font-semibold text-slate-100 sm:text-lg">
           {card.name}
         </h3>
-        <p className="text-sm font-medium text-slate-400">{card.status}</p>
+        <p className={statusConfig[card.status].color}>
+          {statusConfig[card.status].label}
+        </p>
       </div>
 
       <div className="flex flex-col gap-[10px]">
