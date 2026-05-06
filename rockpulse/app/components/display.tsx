@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react";
 import MaschineList from "./MachineList";
 import { statusConfig } from "../types/statusConfig";
 import { MachineStatus } from "../types/status";
+import { Card } from "../types/card";
 
 /*0) первая страницаа монитора механия,по идее тут мне нужна первая вкладка сразу надо прокинуть роутинг
 1) сделать поля "текущая/допустимая гидравлика" и отрисовывать восклицательный знак исходя из этого условия
@@ -20,14 +21,14 @@ import { MachineStatus } from "../types/status";
 13) внести в карточку кнопку для онклика(чтобы валидно работало все)
 */
 
-export type Card = {
-  name: string;
-  id: number;
-  engine: number;
-  hydraulic: number;
-  load: number;
-  status: MachineStatus;
-};
+// export type Card = {
+//   name: string;
+//   id: number;
+//   engine: number;
+//   hydraulic: number;
+//   load: number;
+//   status: MachineStatus;
+// };
 
 export default function Display() {
   const context = useContext(CardContext);

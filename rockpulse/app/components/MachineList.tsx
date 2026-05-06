@@ -4,15 +4,16 @@ import React, { useContext, useState } from "react";
 import MaschineModal from "./MaschineModal";
 import MachineCard from "./MachineCard";
 import { MachineStatus } from "../types/status";
+import { Card } from "../types/card";
 
-export type Card = {
-  name: string;
-  id: number;
-  engine: number;
-  hydraulic: number;
-  load: number;
-  status: string;
-};
+// export type Card = {
+//   name: string;
+//   id: number;
+//   engine: number;
+//   hydraulic: number;
+//   load: number;
+//   status: MachineStatus;
+// };
 type MachineListProps = {
   cards: Card[];
   selectedCardId: number | null;
