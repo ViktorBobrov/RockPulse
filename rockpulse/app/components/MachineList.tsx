@@ -6,20 +6,11 @@ import MachineCard from "./MachineCard";
 import { MachineStatus } from "../types/status";
 import { Card } from "../types/card";
 
-// export type Card = {
-//   name: string;
-//   id: number;
-//   engine: number;
-//   hydraulic: number;
-//   load: number;
-//   status: MachineStatus;
-// };
 type MachineListProps = {
   cards: Card[];
   selectedCardId: number | null;
   onSelect: (card: Card) => void;
 };
-
 export default function MaschineList({
   cards,
   selectedCardId,
@@ -44,6 +35,7 @@ export default function MaschineList({
         <MachineCard
           key={card.id}
           card={card}
+          isSelected
           onSelect={onSelect}
           onEdit={(card) => {
             setEditingCard(card);
