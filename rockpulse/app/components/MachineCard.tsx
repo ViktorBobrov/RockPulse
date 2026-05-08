@@ -7,17 +7,20 @@ type MachineCardProps = {
   onSelect: (card: Card) => void;
   onEdit: (card: Card) => void;
   onDelete: (id: number) => void;
+  isSelected: boolean;
 };
 export default function MachineCard({
   card,
   onSelect,
   onEdit,
   onDelete,
+  isSelected,
 }: MachineCardProps) {
   return (
     <div
-      className="flex cursor-pointer items-start justify-between gap-2 rounded-xl border border-slate-600 bg-slate-900 p-4 transition hover:border-amber-500 hover:bg-slate-800"
-      key={card.id}
+      className={`flex cursor-pointer items-start justify-between gap-2 rounded-xl border bg-slate-900 p-4 transition hover:bg-slate-800 ${
+        isSelected ? "border-amber-500" : "border-slate-600"
+      }`}
       onClick={() => onSelect(card)}
     >
       <div className=" flex flex-col gap-2">
