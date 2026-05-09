@@ -10,11 +10,13 @@ type MachineListProps = {
   cards: Card[];
   selectedCardId: number | null;
   onSelect: (card: Card) => void;
+  onDelete: (id: number) => void;
 };
 export default function MaschineList({
   cards,
   selectedCardId,
   onSelect,
+  onDelete,
 }: MachineListProps) {
   const [form, setForm] = useState({
     name: "",
@@ -23,9 +25,7 @@ export default function MaschineList({
     load: 0,
     status: MachineStatus.WORK,
   });
-  const handleDelete = (id: number) => {
-    setCards((prev) => prev.filter((card) => card.id !== id));
-  };
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCard, setEditingCard] = useState<Card | null>(null);
   const { setCards } = useContext(CardContext);
@@ -35,20 +35,22 @@ export default function MaschineList({
         <MachineCard
           key={card.id}
           card={card}
-          isSelected
+          isSelected={selectedCardId === card.id}
           onSelect={onSelect}
           onEdit={(card) => {
             setEditingCard(card);
+
             setForm({
               name: card.name,
               hydraulic: card.hydraulic,
               engine: card.engine,
               load: card.load,
-              status: MachineStatus.WORK,
+              status: card.status,
             });
+
             setIsModalOpen(true);
           }}
-          onDelete={handleDelete}
+          onDelete={onDelete}
         />
       ))}
       <div className="mt-4">

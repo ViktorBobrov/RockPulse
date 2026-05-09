@@ -21,21 +21,19 @@ import { Card } from "../types/card";
 13) внести в карточку кнопку для онклика(чтобы валидно работало все)
 */
 
-// export type Card = {
-//   name: string;
-//   id: number;
-//   engine: number;
-//   hydraulic: number;
-//   load: number;
-//   status: MachineStatus;
-// };
-
 export default function Display() {
   const context = useContext(CardContext);
 
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
 
   const selectedCard = context.cards.find((card) => card.id === selectedCardId);
+  const handleDelete = (id: number) => {
+    context.setCards((prev) => prev.filter((card) => card.id !== id));
+
+    if (selectedCardId === id) {
+      setSelectedCardId(null);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -48,6 +46,7 @@ export default function Display() {
             cards={context.cards}
             selectedCardId={selectedCardId}
             onSelect={(card) => setSelectedCardId(card.id)}
+            onDelete={handleDelete}
           />
 
           <div>
