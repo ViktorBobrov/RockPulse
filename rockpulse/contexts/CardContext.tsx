@@ -1,7 +1,14 @@
 "use client";
 import { Card } from "@/app/types/card";
 import { MachineStatus } from "@/app/types/status";
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
+import { getMachines } from "@/app/services/machineService";
 
 export const CardContext = createContext(
   {} as {
@@ -15,32 +22,16 @@ export const CardContextProvider = ({
 }: {
   children: React.ReactNode | React.ReactNode[];
 }) => {
-  const [cards, setCards] = useState<Card[]>([
-    {
-      name: "SBH-250",
-      id: 1,
-      engine: 160,
-      hydraulic: 120,
-      load: 16,
-      status: MachineStatus.WORK,
-    },
-    {
-      name: "SBH-250",
-      id: 2,
-      engine: 160,
-      hydraulic: 120,
-      load: 44,
-      status: MachineStatus.WORK,
-    },
-    {
-      name: "SBH-250",
-      id: 3,
-      engine: 160,
-      hydraulic: 120,
-      load: 700,
-      status: MachineStatus.STOPPED,
-    },
-  ]);
+  const [cards, setCards] = useState<Card[]>([]);
+  useEffect(() => {
+    const loadMachines = async () => {
+      const data = await getMachines();
+
+      setCards(data);
+    };
+
+    loadMachines();
+  }, []);
 
   return (
     <CardContext.Provider value={{ cards: cards, setCards: setCards }}>
