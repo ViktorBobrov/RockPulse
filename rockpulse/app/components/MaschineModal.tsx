@@ -175,6 +175,7 @@ export default function MaschineModal({
           onClick={() => {
             if (!validate()) return;
             if (editingCard) {
+              // РЕДАКТИРОВАНИЕ
               setCards((prev) =>
                 prev.map((card) =>
                   card.id === editingCard.id
@@ -187,6 +188,7 @@ export default function MaschineModal({
                 ),
               );
             } else {
+              // ДОБАВЛЕНИЕ
               setCards((prev) => [
                 ...prev,
                 {
