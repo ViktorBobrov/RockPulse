@@ -8,6 +8,7 @@ type MachineCardProps = {
   onEdit: (card: Card) => void;
   onDelete: (id: number) => void;
   isSelected: boolean;
+  canManage: boolean;
 };
 export default function MachineCard({
   card,
@@ -15,6 +16,7 @@ export default function MachineCard({
   onEdit,
   onDelete,
   isSelected,
+  canManage,
 }: MachineCardProps) {
   return (
     <div
@@ -32,26 +34,30 @@ export default function MachineCard({
         </p>
       </div>
 
-      <div className="flex flex-col gap-[10px]">
-        <button
-          className=" top-2 right-2 flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 hover:bg-amber-500 hover:text-slate-900 transition"
-          onClick={(e) => {
-            e.stopPropagation();
-            onEdit(card);
-          }}
-        >
-          ✏️
-        </button>
-        <button
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 hover:bg-red-500 hover:text-white transition"
-          onClick={(e) => {
-            e.stopPropagation();
-            onDelete(card.id);
-          }}
-        >
-          🗑️
-        </button>
-      </div>
+      {canManage && (
+        <div className="flex flex-col gap-[10px]">
+          <button
+            type="button"
+            className="top-2 right-2 flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 transition hover:bg-amber-500 hover:text-slate-900"
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(card);
+            }}
+          >
+            ✏️
+          </button>
+          <button
+            type="button"
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 transition hover:bg-red-500 hover:text-white"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(card.id);
+            }}
+          >
+            🗑️
+          </button>
+        </div>
+      )}
     </div>
   );
 }

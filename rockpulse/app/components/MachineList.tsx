@@ -11,12 +11,14 @@ type MachineListProps = {
   selectedCardId: number | null;
   onSelect: (card: Card) => void;
   onDelete: (id: number) => void;
+  canManage: boolean;
 };
 export default function MaschineList({
   cards,
   selectedCardId,
   onSelect,
   onDelete,
+  canManage,
 }: MachineListProps) {
   const [form, setForm] = useState({
     name: "",
@@ -51,27 +53,31 @@ export default function MaschineList({
             setIsModalOpen(true);
           }}
           onDelete={onDelete}
+          canManage={canManage}
         />
       ))}
-      <div className="mt-4">
-        <button
-          className="w-full rounded-xl border border-dashed border-slate-600 p-3 text-slate-400 hover:border-amber-500 hover:text-amber-400 transition"
-          onClick={() => {
-            setEditingCard(null);
-            setForm({
-              name: "",
-              hydraulic: 0,
-              engine: 0,
-              load: 0,
-              status: MachineStatus.WORK,
-            });
-            setIsModalOpen(true);
-          }}
-        >
-          + Добавить машину
-        </button>
-      </div>
-      {isModalOpen && (
+      {canManage && (
+        <div className="mt-4">
+          <button
+            type="button"
+            className="w-full rounded-xl border border-dashed border-slate-600 p-3 text-slate-400 transition hover:border-amber-500 hover:text-amber-400"
+            onClick={() => {
+              setEditingCard(null);
+              setForm({
+                name: "",
+                hydraulic: 0,
+                engine: 0,
+                load: 0,
+                status: MachineStatus.WORK,
+              });
+              setIsModalOpen(true);
+            }}
+          >
+            + Добавить машину
+          </button>
+        </div>
+      )}
+      {isModalOpen && canManage && (
         <MaschineModal
           form={form}
           setForm={setForm}

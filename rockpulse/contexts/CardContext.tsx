@@ -1,6 +1,5 @@
 "use client";
 import { Card } from "@/app/types/card";
-import { MachineStatus } from "@/app/types/status";
 import {
   createContext,
   Dispatch,
