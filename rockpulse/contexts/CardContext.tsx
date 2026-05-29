@@ -8,7 +8,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { getMachines } from "@/app/services/machineService";
+import { getMachines } from "@/app/serverMock/services/machineService";
 
 export const CardContext = createContext(
   {} as {

@@ -1,6 +1,7 @@
-import { mockMachines } from "../mock/machines";
-import { Card } from "../types/card";
+import { mockMachines } from "../machines";
+import { Card } from "../../types/card";
 
+/// Эмуляция эндпоинтов сервера для работы с машинами.
 let machines: Card[] = [...mockMachines];
 
 export const getMachines = async () => {
