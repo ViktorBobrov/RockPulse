@@ -2,7 +2,9 @@
 import React from "react";
 import { Card } from "../types/card";
 import { statusConfig } from "../types/statusConfig";
+import { UserRole } from "../types/userRole";
 type MachineCardProps = {
+  role: UserRole | null;
   card: Card;
   onSelect: (card: Card) => void;
   onEdit: (card: Card) => void;
@@ -10,6 +12,7 @@ type MachineCardProps = {
   isSelected: boolean;
 };
 export default function MachineCard({
+  role,
   card,
   onSelect,
   onEdit,
@@ -33,7 +36,8 @@ export default function MachineCard({
       </div>
 
       <div className="flex flex-col gap-[10px]">
-        <button
+        {role===UserRole.ADMIN&&(
+         <button
           className=" top-2 right-2 flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 hover:bg-amber-500 hover:text-slate-900 transition"
           onClick={(e) => {
             e.stopPropagation();
@@ -42,7 +46,9 @@ export default function MachineCard({
         >
           ✏️
         </button>
-        <button
+        )}
+        {role===UserRole.ADMIN&&(
+<button
           className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 hover:bg-red-500 hover:text-white transition"
           onClick={(e) => {
             e.stopPropagation();
@@ -51,6 +57,9 @@ export default function MachineCard({
         >
           🗑️
         </button>
+
+        )}
+        
       </div>
     </div>
   );

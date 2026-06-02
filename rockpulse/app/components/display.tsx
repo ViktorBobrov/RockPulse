@@ -5,6 +5,7 @@ import MaschineList from "./MachineList";
 import { statusConfig } from "../types/statusConfig";
 import { MachineStatus } from "../types/status";
 import { Card } from "../types/card";
+import { AuthContext } from "@/contexts/AuthContext";
 
 /*0) первая страницаа монитора механия,по идее тут мне нужна первая вкладка сразу надо прокинуть роутинг
 1) сделать поля "текущая/допустимая гидравлика" и отрисовывать восклицательный знак исходя из этого условия
@@ -25,7 +26,7 @@ export default function Display() {
   const context = useContext(CardContext);
 
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
-
+  const { role } = useContext(AuthContext);
   const selectedCard = context.cards.find((card) => card.id === selectedCardId);
   const handleDelete = (id: number) => {
     context.setCards((prev) => prev.filter((card) => card.id !== id));
@@ -39,10 +40,11 @@ export default function Display() {
     <React.Fragment>
       <div className="w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <h1 className="mb-6 text-2xl font-bold text-slate-100 sm:text-3xl lg:text-4xl">
-          {"монитор механика"}
+          "монитор механика"
         </h1>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] ">
           <MaschineList
+            role={role}
             cards={context.cards}
             selectedCardId={selectedCardId}
             onSelect={(card) => setSelectedCardId(card.id)}
@@ -53,22 +55,22 @@ export default function Display() {
             {selectedCard != null && (
               <div className="rounded-2xl border border-amber-500 bg-slate-800 p-5 shadow-lg sm:p-6">
                 <h3 className="mb-4 text-2xl font-bold text-slate-100">
-                  {" "}
+                
                   Машина:{selectedCard.name}
                 </h3>
                 <p className={statusConfig[selectedCard.status].color}>
                   статус: {statusConfig[selectedCard.status].label}
                 </p>
                 <p className="mb-2 text-sm text-slate-300 sm:text-base">
-                  температура двигателя:{selectedCard.engine}{" "}
+                  температура двигателя:{selectedCard.engine}
                 </p>
                 <p className="mb-2 text-sm text-slate-300 sm:text-base">
-                  температура гидр.жидкости:{selectedCard.hydraulic}{" "}
+                  температура гидр.жидкости:{selectedCard.hydraulic}
                 </p>
                 <p className="text-sm text-slate-300 sm:text-base">
-                  нагрузка:{selectedCard.load}{" "}
+                  нагрузка:{selectedCard.load}
                 </p>
-                {}{" "}
+              
               </div>
             )}
           </div>
