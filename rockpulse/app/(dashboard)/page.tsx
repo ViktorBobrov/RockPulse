@@ -1,9 +1,6 @@
-import Image from "next/image";
-import Display from "./components/display";
-
-import { CardContext, CardContextProvider } from "../contexts/CardContext";
-import MaschineList from "./components/MachineList";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Display from "../components/display";
+import {  CardContextProvider } from "../../contexts/CardContext";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 export default function Home() {
   return (

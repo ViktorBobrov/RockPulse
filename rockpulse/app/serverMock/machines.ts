@@ -9,6 +9,7 @@ export const mockMachines: Card[] = [
 		hydraulic: 120,
 		load: 16,
 		status: MachineStatus.WORK,
+		position:{x:100,y:100},
 	 },
 	 {
 		name: "SBH-250  №7",
@@ -17,6 +18,7 @@ export const mockMachines: Card[] = [
 		hydraulic: 120,
 		load: 44,
 		status: MachineStatus.WORK,
+		position:{x:200,y:200},
 	 },
 	 {
 		name: "PV-125  №14",
@@ -25,4 +27,5 @@ export const mockMachines: Card[] = [
 		hydraulic: 120,
 		load: 700,
 		status: MachineStatus.STOPPED,
+		position:{x:300,y:300},
 	 },]
