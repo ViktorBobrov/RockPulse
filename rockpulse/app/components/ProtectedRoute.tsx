@@ -11,7 +11,7 @@ export default function ProtectedRoute({children,}:{children: React.ReactNode|Re
 
 const router = useRouter();
 useEffect(() => {
-   if (isLoading) return;                        // ещё грузится — стоп
+   if (isLoading) return;                        
    if (userRole === null) router.push("/login");
 }, [userRole,isLoading]);
 

@@ -6,6 +6,7 @@ import { statusConfig } from "../types/statusConfig";
 import { MachineStatus } from "../types/status";
 import { Card } from "../types/card";
 import { AuthContext } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 /*0) первая страницаа монитора механия,по идее тут мне нужна первая вкладка сразу надо прокинуть роутинг
 1) сделать поля "текущая/допустимая гидравлика" и отрисовывать восклицательный знак исходя из этого условия
@@ -24,7 +25,7 @@ import { AuthContext } from "@/contexts/AuthContext";
 
 export default function Display() {
   const context = useContext(CardContext);
-
+  const router = useRouter() 
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const { role } = useContext(AuthContext);
   const selectedCard = context.cards.find((card) => card.id === selectedCardId);
@@ -70,7 +71,12 @@ export default function Display() {
                 <p className="text-sm text-slate-300 sm:text-base">
                   нагрузка:{selectedCard.load}
                 </p>
-              
+              <button onClick={()=>{
+                context.setSelectedId(selectedCard.id)
+                router.push(`/map`)
+              }}>
+                Перейти на карту
+              </button>
               </div>
             )}
           </div>

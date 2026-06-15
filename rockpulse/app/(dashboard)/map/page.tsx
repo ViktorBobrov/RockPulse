@@ -10,10 +10,10 @@ export default function MapPage() {
 
     return (
          <MashineMap
-
     machines={context.cards}
     imageUrl="/map-image.jpg"
-    selectedId={null}
+    selectedId={context.selectedId}
+    setSelectedId={context.setSelectedId}
   />
     )
 }

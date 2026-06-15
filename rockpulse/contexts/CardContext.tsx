@@ -14,6 +14,8 @@ export const CardContext = createContext(
   {} as {
     cards: Card[];
     setCards: Dispatch<SetStateAction<Card[]>>;
+    selectedId: number | null;
+    setSelectedId: Dispatch<SetStateAction<number | null>>;
   },
 );
 
@@ -23,6 +25,7 @@ export const CardContextProvider = ({
   children: React.ReactNode | React.ReactNode[];
 }) => {
   const [cards, setCards] = useState<Card[]>([]);
+  const[selectedId,setSelectedId]=useState<number|null>(null)
   useEffect(() => {
     const loadMachines = async () => {
       const data = await getMachines();
@@ -34,7 +37,7 @@ export const CardContextProvider = ({
   }, []);
 
   return (
-    <CardContext.Provider value={{ cards: cards, setCards: setCards }}>
+    <CardContext.Provider value={{ cards: cards, setCards: setCards,selectedId:selectedId,setSelectedId:setSelectedId}}>
       {children}
     </CardContext.Provider>
   );
