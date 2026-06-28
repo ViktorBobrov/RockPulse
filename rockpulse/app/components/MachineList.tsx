@@ -32,6 +32,18 @@ export default function MaschineList({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCard, setEditingCard] = useState<Card | null>(null);
   const { setCards } = useContext(CardContext);
+  const onAddMashineClick:React.MouseEventHandler<HTMLButtonElement> =()=>{
+      setEditingCard(null);
+    setForm({
+      name: "",
+      hydraulic: 0,
+      engine: 0,
+      load: 0,
+      status: MachineStatus.WORK,
+    });
+    setIsModalOpen(true);
+
+  }
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-800 p-4 shadow-lg">
       {cards.map((card) => (
@@ -57,21 +69,13 @@ export default function MaschineList({
           onDelete={onDelete}
         />
       ))}
-      {role===UserRole.ADMIN&&(
+      {role === UserRole.ADMIN&&(
       <div className="mt-4">
         <button
           className="w-full rounded-xl border border-dashed border-slate-600 p-3 text-slate-400 hover:border-amber-500 hover:text-amber-400 transition"
-          onClick={() => {
-            setEditingCard(null);
-            setForm({
-              name: "",
-              hydraulic: 0,
-              engine: 0,
-              load: 0,
-              status: MachineStatus.WORK,
-            });
-            setIsModalOpen(true);
-          }}
+          onClick={onAddMashineClick
+            
+          }
         >
           + Добавить машину
         </button>

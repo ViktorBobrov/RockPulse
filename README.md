@@ -27,7 +27,7 @@
 ## Установка и запуск
 
 ```bash
-git clone https://github.com/your-username/rockpulse.git
+git clone https://github.com/ViktorBobrov/RockPulse.git
 cd rockpulse/rockpulse
 npm install
 ```
