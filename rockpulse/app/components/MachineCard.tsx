@@ -27,39 +27,33 @@ export default function MachineCard({
       onClick={() => onSelect(card)}
     >
       <div className=" flex flex-col gap-2">
-        <h3 className="text-base font-semibold text-slate-100 sm:text-lg">
-          {card.name}
-        </h3>
-        <p className={statusConfig[card.status].color}>
-          {statusConfig[card.status].label}
-        </p>
+        <h3 className="text-base font-semibold text-slate-100 sm:text-lg">{card.name}</h3>
+        <p className={statusConfig[card.status].color}>{statusConfig[card.status].label}</p>
       </div>
 
       <div className="flex flex-col gap-[10px]">
-        {role===UserRole.ADMIN&&(
-         <button
-          className=" top-2 right-2 flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 hover:bg-amber-500 hover:text-slate-900 transition"
-          onClick={(e) => {
-            e.stopPropagation();
-            onEdit(card);
-          }}
-        >
-          ✏️
-        </button>
+        {role === UserRole.ADMIN && (
+          <button
+            className=" top-2 right-2 flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 hover:bg-amber-500 hover:text-slate-900 transition"
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(card);
+            }}
+          >
+            ✏️
+          </button>
         )}
-        {role===UserRole.ADMIN&&(
-<button
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 hover:bg-red-500 hover:text-white transition"
-          onClick={(e) => {
-            e.stopPropagation();
-            onDelete(card.id);
-          }}
-        >
-          🗑️
-        </button>
-
+        {role === UserRole.ADMIN && (
+          <button
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700 text-slate-300 hover:bg-red-500 hover:text-white transition"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(card.id);
+            }}
+          >
+            🗑️
+          </button>
         )}
-        
       </div>
     </div>
   );

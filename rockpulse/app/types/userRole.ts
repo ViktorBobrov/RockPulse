@@ -6,4 +6,4 @@ export type User = {
   login: string;
   password: string;
   role: UserRole;
-  }
+};

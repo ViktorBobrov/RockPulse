@@ -94,9 +94,7 @@ export default function MaschineModal({
             onChange={(e) => handleChange("name", e.target.value)}
           />
 
-          {errors.name && (
-            <span className="text-xs text-red-400">{errors.name}</span>
-          )}
+          {errors.name && <span className="text-xs text-red-400">{errors.name}</span>}
         </label>
 
         <label className="flex flex-col gap-1">
@@ -111,9 +109,7 @@ export default function MaschineModal({
             onChange={(e) => handleChange("engine", Number(e.target.value))}
           />
 
-          {errors.engine && (
-            <span className="text-xs text-red-400">{errors.engine}</span>
-          )}
+          {errors.engine && <span className="text-xs text-red-400">{errors.engine}</span>}
         </label>
         <label className="flex flex-col gap-1">
           <span className="text-sm text-slate-400">нагрузка</span>
@@ -127,9 +123,7 @@ export default function MaschineModal({
             onChange={(e) => handleChange("load", Number(e.target.value))}
           />
 
-          {errors.load && (
-            <span className="text-xs text-red-400">{errors.load}</span>
-          )}
+          {errors.load && <span className="text-xs text-red-400">{errors.load}</span>}
         </label>
         <label className="flex flex-col gap-1">
           <span className="text-sm text-slate-400">уровень гидравлики</span>
@@ -143,9 +137,7 @@ export default function MaschineModal({
             onChange={(e) => handleChange("hydraulic", Number(e.target.value))}
           />
 
-          {errors.hydraulic && (
-            <span className="text-xs text-red-400">{errors.hydraulic}</span>
-          )}
+          {errors.hydraulic && <span className="text-xs text-red-400">{errors.hydraulic}</span>}
         </label>
         <label className="flex flex-col gap-[1px]">
           <span className="text-sm text-slate-400">Статус</span>
@@ -153,9 +145,7 @@ export default function MaschineModal({
           <select
             className="w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-white focus:border-amber-500 focus:outline-none"
             value={form.status}
-            onChange={(e) =>
-              handleChange("status", e.target.value as MachineStatus)
-            }
+            onChange={(e) => handleChange("status", e.target.value as MachineStatus)}
           >
             {Object.values(MachineStatus).map((status) => (
               <option key={status} value={status}>

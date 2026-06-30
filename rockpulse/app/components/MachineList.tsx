@@ -32,8 +32,8 @@ export default function MaschineList({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCard, setEditingCard] = useState<Card | null>(null);
   const { setCards } = useContext(CardContext);
-  const onAddMashineClick:React.MouseEventHandler<HTMLButtonElement> =()=>{
-      setEditingCard(null);
+  const onAddMashineClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    setEditingCard(null);
     setForm({
       name: "",
       hydraulic: 0,
@@ -42,8 +42,18 @@ export default function MaschineList({
       status: MachineStatus.WORK,
     });
     setIsModalOpen(true);
-
-  }
+  };
+  const onEditMachineClick = (card: Card) => {
+    setEditingCard(card);
+    setForm({
+      name: card.name,
+      hydraulic: card.hydraulic,
+      engine: card.engine,
+      load: card.load,
+      status: card.status,
+    });
+    setIsModalOpen(true);
+  };
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-800 p-4 shadow-lg">
       {cards.map((card) => (
@@ -53,33 +63,20 @@ export default function MaschineList({
           card={card}
           isSelected={selectedCardId === card.id}
           onSelect={onSelect}
-          onEdit={(card) => {
-            setEditingCard(card);
-
-            setForm({
-              name: card.name,
-              hydraulic: card.hydraulic,
-              engine: card.engine,
-              load: card.load,
-              status: card.status,
-            });
-
-            setIsModalOpen(true);
-          }}
+          onEdit={onEditMachineClick}
           onDelete={onDelete}
         />
       ))}
-      {role === UserRole.ADMIN&&(
-      <div className="mt-4">
-        <button
-          className="w-full rounded-xl border border-dashed border-slate-600 p-3 text-slate-400 hover:border-amber-500 hover:text-amber-400 transition"
-          onClick={onAddMashineClick
-            
-          }
-        >
-          + Добавить машину
-        </button>
-      </div>)}
+      {role === UserRole.ADMIN && (
+        <div className="mt-4">
+          <button
+            className="w-full rounded-xl border border-dashed border-slate-600 p-3 text-slate-400 hover:border-amber-500 hover:text-amber-400 transition"
+            onClick={onAddMashineClick}
+          >
+            + Добавить машину
+          </button>
+        </div>
+      )}
       {isModalOpen && (
         <MaschineModal
           form={form}

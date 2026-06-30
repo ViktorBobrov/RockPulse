@@ -6,7 +6,7 @@ let machines: Card[] = [...mockMachines];
 
 export const getMachines = async () => {
   try {
-    const response = await fetch("http://localhost:3000/machines");
+    const response = await fetch("/api/machines");
     const data = await response.json();
     return data;
   } catch (error) {
@@ -18,8 +18,8 @@ export const getMachines = async () => {
 
 //добавляю машину в массив на бекэнде
 export const createMachine = async (machine: Card) => {
-  try{
-    const response = await fetch("http://localhost:3000/machines", {
+  try {
+    const response = await fetch("/api/machines", {
       method: "POST",
       body: JSON.stringify(machine),
     });
@@ -27,10 +27,11 @@ export const createMachine = async (machine: Card) => {
     return data;
   } catch (error) {
     console.error("Error creating machine:", error);
-  machines.push(machine);
+    machines.push(machine);
 
-  return machine;
-}};
+    return machine;
+  }
+};
 
 export const updateMachine = async (updatedMachine: Card) => {
   machines = machines.map((machine) =>

@@ -19,23 +19,29 @@ type MashineMapProps = {
   machines: Card[];
   selectedId: number | null;
   setSelectedId: (id: number | null) => void;
-  
 };
 
-export default function MashineMap({ imageUrl, machines, selectedId, setSelectedId }: MashineMapProps) {
-  const bounds: L.LatLngBoundsExpression = [[0, 0], [800, 1000]];
+export default function MashineMap({
+  imageUrl,
+  machines,
+  selectedId,
+  setSelectedId,
+}: MashineMapProps) {
+  const bounds: L.LatLngBoundsExpression = [
+    [0, 0],
+    [800, 1000],
+  ];
   const isSelected = (machine: Card) => machine.id === selectedId;
-  const getIcon = (status: MachineStatus,isSelected: boolean) => {
+  const getIcon = (status: MachineStatus, isSelected: boolean) => {
     const size = isSelected ? 24 : 16;
-const border = isSelected ? "3px solid #f59e0b" : "2px solid white";
-    const color = status === MachineStatus.WORK ? "green"
-      : status === MachineStatus.ERROR ? "red"
-      : "gray";
+    const border = isSelected ? "3px solid #f59e0b" : "2px solid white";
+    const color =
+      status === MachineStatus.WORK ? "green" : status === MachineStatus.ERROR ? "red" : "gray";
     return L.divIcon({
       className: "",
       html: `<div style="width:${size}px;height:${size}px;border-radius:50%;background:${color};border:${border}"></div>`,
-    });         // ← закрыть divIcon
-  };            // ← закрыть getIcon
+    }); // ← закрыть divIcon
+  }; // ← закрыть getIcon
   // RETURN компонента — отдельно
   return (
     <MapContainer
@@ -49,7 +55,7 @@ const border = isSelected ? "3px solid #f59e0b" : "2px solid white";
         <Marker
           key={machine.id}
           position={[machine.position.y, machine.position.x]}
-          icon={getIcon(machine.status,isSelected(machine))}
+          icon={getIcon(machine.status, isSelected(machine))}
           eventHandlers={{
             click: () => setSelectedId(machine.id),
           }}

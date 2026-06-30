@@ -7,5 +7,5 @@ export type Card = {
   hydraulic: number;
   load: number;
   status: MachineStatus;
-  position:{x:number,y:number};
+  position: { x: number; y: number };
 };

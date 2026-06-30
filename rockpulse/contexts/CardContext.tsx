@@ -1,13 +1,7 @@
 "use client";
 import { Card } from "@/app/types/card";
 import { MachineStatus } from "@/app/types/status";
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getMachines } from "@/app/serverMock/services/machineService";
 
 export const CardContext = createContext(
@@ -25,7 +19,7 @@ export const CardContextProvider = ({
   children: React.ReactNode | React.ReactNode[];
 }) => {
   const [cards, setCards] = useState<Card[]>([]);
-  const[selectedId,setSelectedId]=useState<number|null>(null)
+  const [selectedId, setSelectedId] = useState<number | null>(null);
   useEffect(() => {
     const loadMachines = async () => {
       const data = await getMachines();
@@ -37,7 +31,14 @@ export const CardContextProvider = ({
   }, []);
 
   return (
-    <CardContext.Provider value={{ cards: cards, setCards: setCards,selectedId:selectedId,setSelectedId:setSelectedId}}>
+    <CardContext.Provider
+      value={{
+        cards: cards,
+        setCards: setCards,
+        selectedId: selectedId,
+        setSelectedId: setSelectedId,
+      }}
+    >
       {children}
     </CardContext.Provider>
   );
