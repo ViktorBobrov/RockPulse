@@ -24,7 +24,7 @@ export const createMachine = async (machine: Card) => {
       body: JSON.stringify(machine),
     });
     const data = await response.json();
-    return data;
+    return data as Card;
   } catch (error) {
     console.error("Error creating machine:", error);
     machines.push(machine);

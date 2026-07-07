@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Card } from "@/app/types/card";
 import { MachineStatus } from "../types/status";
 import { statusConfig } from "../types/statusConfig";
+import { createMachine } from "../serverMock/services/machineService";
+import { error } from "console";
 
 type FormType = {
   name: string;
@@ -162,7 +164,7 @@ export default function MaschineModal({
           Закрыть
         </button>
         <button
-          onClick={() => {
+          onClick={async () => {
             if (!validate()) return;
             if (editingCard) {
               // РЕДАКТИРОВАНИЕ
@@ -179,15 +181,23 @@ export default function MaschineModal({
               );
             } else {
               // ДОБАВЛЕНИЕ
-              setCards((prev) => [
-                ...prev,
-                {
+              try {
+                let newMachine = await createMachine({
+                  name: form.name,
                   id: Date.now(),
-                  ...form,
-                  name: form.name.trim() || "Без названия",
-                  status: MachineStatus.WORK,
-                },
-              ]);
+                  engine: form.engine,
+                  hydraulic: form.hydraulic,
+                  load: form.load,
+                  status: form.status,
+                  position: { x: 0, y: 0 },
+                });
+                {
+                  newMachine;
+                }
+                setCards((prev) => [...prev, newMachine]);
+              } catch (error) {
+                console.error(error);
+              }
             }
 
             setForm({

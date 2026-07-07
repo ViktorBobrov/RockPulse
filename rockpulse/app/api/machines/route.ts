@@ -16,6 +16,7 @@ export async function GET() {
     try {
       const newMachine: Card = await request.json(); // может упасть!
       machines.push(newMachine);
+      console.log("machines.push(newMachine)");
       return NextResponse.json(newMachine, { status: 201 });
     } catch (error) {
       console.error("POST /api/machines:", error);
@@ -25,3 +26,14 @@ export async function GET() {
       );
     }
   }
+  
+export async function PUT(request: Request) {
+   try {
+    console.log(request);
+    return NextResponse.json(machines);
+  } catch (error) {
+    console.error("Error fetching machines:", error);
+    return NextResponse.json({ error: "Failed to fetch machines" }, { status: 500 });
+  }
+}
+export async function DELETE(request: Request) {}
