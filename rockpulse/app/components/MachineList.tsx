@@ -1,6 +1,6 @@
 "use client";
-import { CardContext } from "@/contexts/CardContext";
-import React, { useContext, useState } from "react";
+
+import React, { useState } from "react";
 import MaschineModal from "./MaschineModal";
 import MachineCard from "./MachineCard";
 import { MachineStatus } from "../types/status";
@@ -31,7 +31,6 @@ export default function MaschineList({
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCard, setEditingCard] = useState<Card | null>(null);
-  const { setCards } = useContext(CardContext);
   const onAddMashineClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     setEditingCard(null);
     setForm({
@@ -84,7 +83,6 @@ export default function MaschineList({
           setIsModalOpen={setIsModalOpen}
           editingCard={editingCard}
           setEditingCard={setEditingCard}
-          setCards={setCards}
         />
       )}
     </div>

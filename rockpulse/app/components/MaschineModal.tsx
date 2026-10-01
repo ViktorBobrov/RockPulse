@@ -3,8 +3,6 @@ import React, { useContext, useState } from "react";
 import { Card } from "@/app/types/card";
 import { MachineStatus } from "../types/status";
 import { statusConfig } from "../types/statusConfig";
-import { createMachine } from "../serverMock/services/machineService";
-import { error } from "console";
 import { CardContext } from "@/contexts/CardContext";
 
 type FormType = {
@@ -21,7 +19,6 @@ type MachineModalProps = {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   editingCard: Card | null;
   setEditingCard: React.Dispatch<React.SetStateAction<Card | null>>;
-  setCards: React.Dispatch<React.SetStateAction<Card[]>>;
 };
 
 export default function MaschineModal({
@@ -30,7 +27,6 @@ export default function MaschineModal({
   setIsModalOpen,
   editingCard,
   setEditingCard,
-  setCards,
 }: MachineModalProps) {
   const context = useContext(CardContext);
   const [errors, setErrors] = useState<{

@@ -3,25 +3,8 @@ import { CardContext } from "@/contexts/CardContext";
 import React, { useContext, useState } from "react";
 import MaschineList from "./MachineList";
 import { statusConfig } from "../types/statusConfig";
-import { MachineStatus } from "../types/status";
-import { Card } from "../types/card";
 import { AuthContext } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-
-/*0) первая страницаа монитора механия,по идее тут мне нужна первая вкладка сразу надо прокинуть роутинг
-1) сделать поля "текущая/допустимая гидравлика" и отрисовывать восклицательный знак исходя из этого условия
-2) качественная стилизация.
-4) добавить кнопку" добавить машину",она будет открывать всплывающее окно с формой заполнения данных о машине. присохранении машины она будет записывать в контекст.
-5)кнопка удалить машину. удалять из контекста
-6) 
-7) исправить название  компонента (непонятно  что внутри)* исправил название*
-8) отдельный модуль для css
-9) либо таилвинд везде, либо  модули* везде таилвинд, отдан  ГПт*
-10)прочитать что такое  FSD 
-11)передавать по айди карточку,вместо setSelectedCard
-12)c 37 строки менять на отдельный компонент
-13) внести в карточку кнопку для онклика(чтобы валидно работало все)
-*/
 
 export default function Display() {
   const context = useContext(CardContext);
