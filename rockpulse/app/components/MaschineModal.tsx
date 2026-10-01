@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Card } from "@/app/types/card";
 import { MachineStatus } from "../types/status";
 import { statusConfig } from "../types/statusConfig";
 import { createMachine } from "../serverMock/services/machineService";
 import { error } from "console";
+import { CardContext } from "@/contexts/CardContext";
 
 type FormType = {
   name: string;
@@ -31,6 +32,7 @@ export default function MaschineModal({
   setEditingCard,
   setCards,
 }: MachineModalProps) {
+  const context = useContext(CardContext);
   const [errors, setErrors] = useState<{
     name?: string;
     engine?: string;
@@ -48,7 +50,6 @@ export default function MaschineModal({
       [field]: undefined,
     }));
   };
-
   const validate = () => {
     const newErrors: typeof errors = {};
 
@@ -72,6 +73,8 @@ export default function MaschineModal({
 
     return Object.keys(newErrors).length === 0;
   };
+
+  const [errorState, setErrorState] = useState<string | null>(null);
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
@@ -98,7 +101,6 @@ export default function MaschineModal({
 
           {errors.name && <span className="text-xs text-red-400">{errors.name}</span>}
         </label>
-
         <label className="flex flex-col gap-1">
           <span className="text-sm text-slate-400">температура двигателя</span>
 
@@ -156,7 +158,7 @@ export default function MaschineModal({
             ))}
           </select>
         </label>
-
+        {errorState !== null && <div className="text-red-500">{errorState}</div>}
         <button
           onClick={() => setIsModalOpen(false)}
           className="mt-4 w-full rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-400"
@@ -168,21 +170,27 @@ export default function MaschineModal({
             if (!validate()) return;
             if (editingCard) {
               // РЕДАКТИРОВАНИЕ
-              setCards((prev) =>
-                prev.map((card) =>
-                  card.id === editingCard.id
-                    ? {
-                        ...card,
-                        ...form,
-                        name: form.name || card.name,
-                      }
-                    : card,
-                ),
-              );
+              try {
+                await context.updateCard({
+                  ...editingCard,
+                  ...form,
+                });
+                setEditingCard(null);
+                setIsModalOpen(false);
+                setForm({
+                  name: "",
+                  hydraulic: 0,
+                  engine: 0,
+                  load: 0,
+                  status: MachineStatus.WORK,
+                });
+              } catch (error) {
+                setErrorState("Произошла ошибка при редактировании машины");
+              }
             } else {
               // ДОБАВЛЕНИЕ
               try {
-                let newMachine = await createMachine({
+                await context.addCard({
                   name: form.name,
                   id: Date.now(),
                   engine: form.engine,
@@ -191,25 +199,20 @@ export default function MaschineModal({
                   status: form.status,
                   position: { x: 0, y: 0 },
                 });
-                {
-                  newMachine;
-                }
-                setCards((prev) => [...prev, newMachine]);
+                setForm({
+                  name: "",
+                  hydraulic: 0,
+                  engine: 0,
+                  load: 0,
+                  status: MachineStatus.WORK,
+                });
+
+                setEditingCard(null);
+                setIsModalOpen(false);
               } catch (error) {
-                console.error(error);
+                setErrorState("Произошла ошибка при добавлении машины");
               }
             }
-
-            setForm({
-              name: "",
-              hydraulic: 0,
-              engine: 0,
-              load: 0,
-              status: MachineStatus.WORK,
-            });
-
-            setEditingCard(null);
-            setIsModalOpen(false);
           }}
           className="mt-2 w-full rounded-lg bg-amber-500 px-4 py-2 text-slate-900 hover:bg-amber-400"
         >

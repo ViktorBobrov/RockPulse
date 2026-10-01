@@ -7,13 +7,16 @@ let machines: Card[] = [...mockMachines];
 export const getMachines = async () => {
   try {
     const response = await fetch("/api/machines");
+
+    if (!response.ok) {
+      throw new Error("не удалось загрузить список машин");
+    }
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching machines:", error);
-    return [];
+    throw new Error("не удалось загрузить список машин");
   }
-  return machines;
+  
 };
 
 //добавляю машину в массив на бекэнде
@@ -23,23 +26,47 @@ export const createMachine = async (machine: Card) => {
       method: "POST",
       body: JSON.stringify(machine),
     });
+
+    if (!response.ok) {
+      throw new Error("не удалось  создать машину");
+    }
     const data = await response.json();
     return data as Card;
   } catch (error) {
     console.error("Error creating machine:", error);
-    machines.push(machine);
+    throw new Error("не удалось  создать машину");
 
-    return machine;
   }
 };
 
 export const updateMachine = async (updatedMachine: Card) => {
-  machines = machines.map((machine) =>
-    machine.id === updatedMachine.id ? updatedMachine : machine,
-  );
-
-  return updatedMachine;
+  try{
+const response= await fetch ("/api/machines", {
+      method: "PUT",
+      body: JSON.stringify(updatedMachine),
+    })
+    if (!response.ok) {
+      throw new Error("не удалось обновить машину");
+    }
+    const data = await response.json();
+return data as Card;
+  }catch(error){
+    console.error("Error ubdate machine:", error);
+    throw new Error("не удалось обновить машину");
+  };
 };
 export const deleteMachine = async (id: number) => {
-  machines = machines.filter((machine) => machine.id !== id);
-};
+ try{
+  const response = await fetch (`/api/machines`, {
+    method:"DELETE",
+    body:JSON.stringify({id}),
+  });
+  if (!response.ok) {
+    throw new Error("не удалось удалить машину");
+  }
+  
+}   catch (error) {
+  throw new Error("не удалось удалить машину");
+}
+
+}
