@@ -154,7 +154,11 @@ export default function MaschineModal({
             ))}
           </select>
         </label>
-        {errorState !== null && <div className="text-red-500">{errorState}</div>}
+        {errorState !== null && (
+          <div className="mb-2 mt-4 rounded-lg border border-red-500 bg-red-500/10 px-3 py-2 text-sm text-red-400">
+            {errorState}
+          </div>
+        )}
         <button
           onClick={() => setIsModalOpen(false)}
           className="mt-4 w-full rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-400"
