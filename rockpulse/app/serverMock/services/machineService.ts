@@ -8,7 +8,7 @@ export const getMachines = async () => {
     }
     const data = await response.json();
     return data;
-  } catch (error) {
+  } catch {
     throw new Error("не удалось загрузить список машин");
   }
 };
@@ -16,12 +16,13 @@ export const getMachines = async () => {
 export const createMachine = async (machine: Card) => {
   try {
     const response = await fetch("/api/machines", {
+      headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(machine),
     });
 
     if (!response.ok) {
-      throw new Error("не удалось  создать машину");
+      throw new Error("не удалось создать машину");
     }
     const data = await response.json();
     return data as Card;
@@ -33,6 +34,7 @@ export const createMachine = async (machine: Card) => {
 export const updateMachine = async (updatedMachine: Card) => {
   try {
     const response = await fetch("/api/machines", {
+      headers: { "Content-Type": "application/json" },
       method: "PUT",
       body: JSON.stringify(updatedMachine),
     });
@@ -42,20 +44,21 @@ export const updateMachine = async (updatedMachine: Card) => {
     const data = await response.json();
     return data as Card;
   } catch (error) {
-    console.error("Error ubdate machine:", error);
+    console.error("Error update machine:", error);
     throw new Error("не удалось обновить машину");
   }
 };
 export const deleteMachine = async (id: number) => {
   try {
-    const response = await fetch(`/api/machines`, {
+    const response = await fetch("/api/machines", {
       method: "DELETE",
       body: JSON.stringify({ id }),
+      headers: { "Content-Type": "application/json" },
     });
     if (!response.ok) {
       throw new Error("не удалось удалить машину");
     }
-  } catch (error) {
+  } catch {
     throw new Error("не удалось удалить машину");
   }
 };

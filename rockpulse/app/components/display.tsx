@@ -10,15 +10,19 @@ import ErrorScreen from "./ErrorScreen";
 export default function Display() {
   const context = useContext(CardContext);
   const router = useRouter();
-
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const { role } = useContext(AuthContext);
   const selectedCard = context.cards.find((card) => card.id === selectedCardId);
   const handleDelete = async (id: number) => {
-    await context.deleteCard(id);
-
-    if (selectedCardId === id) {
-      setSelectedCardId(null);
+    try {
+      setDeleteError(null);
+      await context.deleteCard(id);
+      if (selectedCardId === id) {
+        setSelectedCardId(null);
+      }
+    } catch {
+      setDeleteError("Не удалось удалить машину");
     }
   };
 
@@ -31,6 +35,11 @@ export default function Display() {
           <h1 className="mb-6 text-2xl font-bold text-slate-100 sm:text-3xl lg:text-4xl">
             монитор механика
           </h1>
+          {deleteError !== null && (
+            <div className="mb-6 rounded-lg border border-red-500 bg-red-500/10 px-3 py-2 text-sm text-red-400">
+              {deleteError}
+            </div>
+          )}
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] ">
             <MaschineList
               role={role}
