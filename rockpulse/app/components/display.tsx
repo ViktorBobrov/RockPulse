@@ -11,15 +11,14 @@ export default function Display() {
   const context = useContext(CardContext);
   const router = useRouter();
   const [deleteError, setDeleteError] = useState<string | null>(null);
-  const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const { role } = useContext(AuthContext);
-  const selectedCard = context.cards.find((card) => card.id === selectedCardId);
+  const selectedCard = context.cards.find((card) => card.id === context.selectedId);
   const handleDelete = async (id: number) => {
     try {
       setDeleteError(null);
       await context.deleteCard(id);
-      if (selectedCardId === id) {
-        setSelectedCardId(null);
+      if (context.selectedId === id) {
+        context.setSelectedId(null);
       }
     } catch {
       setDeleteError("Не удалось удалить машину");
@@ -44,8 +43,8 @@ export default function Display() {
             <MaschineList
               role={role}
               cards={context.cards}
-              selectedCardId={selectedCardId}
-              onSelect={(card) => setSelectedCardId(card.id)}
+              selectedCardId={context.selectedId}
+              onSelect={(card) => context.setSelectedId(card.id)}
               onDelete={handleDelete}
             />
 
@@ -72,7 +71,6 @@ export default function Display() {
                   <button
                     className="rounded-lg bg-amber-500 px-4 py-2 text-slate-900 hover:bg-amber-400 mt-4"
                     onClick={() => {
-                      context.setSelectedId(selectedCard.id);
                       router.push(`/map`);
                     }}
                   >

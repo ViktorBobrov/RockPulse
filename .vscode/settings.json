@@ -1,0 +1,5 @@
+{
+  "typescript.tsdk": "rockpulse/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "js/ts.tsdk.path": "rockpulse/node_modules/typescript/lib"
+}
