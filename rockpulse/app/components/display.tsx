@@ -6,6 +6,7 @@ import { statusConfig } from "../types/statusConfig";
 import { AuthContext } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import ErrorScreen from "./ErrorScreen";
+import ErrorBanner from "./ErrorBanner";
 
 export default function Display() {
   const context = useContext(CardContext);
@@ -35,8 +36,8 @@ export default function Display() {
             монитор механика
           </h1>
           {deleteError !== null && (
-            <div className="mb-6 rounded-lg border border-red-500 bg-red-500/10 px-3 py-2 text-sm text-red-400">
-              {deleteError}
+            <div className="mb-6">
+              <ErrorBanner message={deleteError} />
             </div>
           )}
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] ">
@@ -71,7 +72,7 @@ export default function Display() {
                   <button
                     className="rounded-lg bg-amber-500 px-4 py-2 text-slate-900 hover:bg-amber-400 mt-4"
                     onClick={() => {
-                      router.push(`/map`);
+                      router.push("/map");
                     }}
                   >
                     Перейти на карту

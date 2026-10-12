@@ -4,6 +4,7 @@ import { Card } from "@/app/types/card";
 import { MachineStatus } from "../types/status";
 import { statusConfig } from "../types/statusConfig";
 import { CardContext } from "@/contexts/CardContext";
+import ErrorBanner from "./ErrorBanner";
 
 type FormType = {
   name: string;
@@ -155,8 +156,8 @@ export default function MaschineModal({
           </select>
         </label>
         {errorState !== null && (
-          <div className="mb-2 mt-4 rounded-lg border border-red-500 bg-red-500/10 px-3 py-2 text-sm text-red-400">
-            {errorState}
+          <div className="mb-2 mt-4">
+            <ErrorBanner message={errorState} />
           </div>
         )}
         <button

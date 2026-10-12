@@ -32,7 +32,7 @@ export const CardContextProvider = ({
       try {
         const data = await getMachines();
         setCards(data);
-      } catch (error) {
+      } catch {
         setLoadError("не удалось загрузить список машин");
       }
     };
