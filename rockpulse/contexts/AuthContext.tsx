@@ -20,6 +20,12 @@ export const AuthContextProvider = ({
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const role = localStorage.getItem("role");
+    // TODO: вернуться и убрать eslint-disable. Правило react-hooks/set-state-in-effect
+    // справедливо: setState в эффекте даёт лишний рендер. Здесь он вынужденный, потому что
+    // localStorage недоступен на сервере, а чтение в useState сломает SSR и гидратацию.
+    // Правильное решение: useSyncExternalStore с отдельным значением для сервера
+    // или хранение роли в cookie.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setRole(role as UserRole);
     setIsLoading(false);
   }, []);

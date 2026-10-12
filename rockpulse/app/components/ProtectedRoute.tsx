@@ -15,7 +15,7 @@ export default function ProtectedRoute({
   useEffect(() => {
     if (isLoading) return;
     if (userRole === null) router.push("/login");
-  }, [userRole, isLoading]);
+  }, [userRole, isLoading, router]);
 
   if (isLoading) return null;
   if (!userRole) return null;

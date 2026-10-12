@@ -185,7 +185,7 @@ export default function MaschineModal({
                   load: 0,
                   status: MachineStatus.WORK,
                 });
-              } catch (error) {
+              } catch {
                 setErrorState("Произошла ошибка при редактировании машины");
               }
             } else {
@@ -210,7 +210,7 @@ export default function MaschineModal({
 
                 setEditingCard(null);
                 setIsModalOpen(false);
-              } catch (error) {
+              } catch {
                 setErrorState("Произошла ошибка при добавлении машины");
               }
             }
