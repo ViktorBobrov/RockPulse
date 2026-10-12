@@ -1,4 +1,4 @@
-import Display from "../components/display";
+import Display from "@/app/components/Display";
 
 export default function Home() {
   return (
