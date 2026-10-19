@@ -1,15 +1,16 @@
 "use client";
 import { Card } from "@/app/types/card";
 
-import { createContext, Dispatch, SetStateAction, useEffect, useState } from "react";
-import { getMachines } from "@/app/serverMock/services/machineService";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
+
 import { createMachine } from "@/app/serverMock/services/machineService";
 import { updateMachine } from "@/app/serverMock/services/machineService";
 import { deleteMachine } from "@/app/serverMock/services/machineService";
+import { useFetch } from "@/app/hooks/useFetch";
 export const CardContext = createContext(
   {} as {
     cards: Card[];
-    setCards: Dispatch<SetStateAction<Card[]>>;
+
     selectedId: number | null;
     setSelectedId: Dispatch<SetStateAction<number | null>>;
     addCard: (maсhine: Card) => Promise<void>;
@@ -24,42 +25,30 @@ export const CardContextProvider = ({
 }: {
   children: React.ReactNode | React.ReactNode[];
 }) => {
-  const [cards, setCards] = useState<Card[]>([]);
+  const { data, setData, error, loading } = useFetch<Card[]>("/api/machines");
+  const cards = data ?? [];
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [loadError, setLoadError] = useState<string | null>(null);
-  useEffect(() => {
-    const loadMachines = async () => {
-      try {
-        const data = await getMachines();
-        setCards(data);
-      } catch {
-        setLoadError("не удалось загрузить список машин");
-      }
-    };
 
-    loadMachines();
-  }, []);
   const addCard = async (maсhine: Card) => {
     await createMachine(maсhine);
-    setCards((prev) => [...prev, maсhine]);
+    setData((prev) => [...(prev ?? []), maсhine]);
   };
   const updateCard = async (machine: Card) => {
     await updateMachine(machine);
-    setCards((prev) => prev.map((card) => (card.id === machine.id ? machine : card)));
+    setData((prev) => (prev ?? []).map((card) => (card.id === machine.id ? machine : card)));
   };
   const deleteCard = async (id: number) => {
     await deleteMachine(id);
-    setCards((prev) => prev.filter((card) => card.id !== id));
+    setData((prev) => (prev ?? []).filter((card) => card.id !== id));
   };
   return (
     <CardContext.Provider
       value={{
         cards: cards,
-        setCards: setCards,
         selectedId: selectedId,
         setSelectedId: setSelectedId,
         addCard: addCard,
-        loadError: loadError,
+        loadError: error,
         updateCard: updateCard,
         deleteCard: deleteCard,
       }}
