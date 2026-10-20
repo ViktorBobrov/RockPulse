@@ -7,6 +7,7 @@ import { AuthContext } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import ErrorScreen from "./ErrorScreen";
 import ErrorBanner from "./ErrorBanner";
+import Loader from "./Loader";
 
 export default function Display() {
   const context = useContext(CardContext);
@@ -28,7 +29,9 @@ export default function Display() {
 
   return (
     <React.Fragment>
-      {context.loadError !== null ? (
+      {context.loading ? (
+        <Loader />
+      ) : context.loadError !== null ? (
         <ErrorScreen error={context.loadError} />
       ) : (
         <div className="w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">

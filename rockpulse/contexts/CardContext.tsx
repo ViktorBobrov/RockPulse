@@ -10,7 +10,7 @@ import { useFetch } from "@/app/hooks/useFetch";
 export const CardContext = createContext(
   {} as {
     cards: Card[];
-
+    loading: boolean;
     selectedId: number | null;
     setSelectedId: Dispatch<SetStateAction<number | null>>;
     addCard: (maсhine: Card) => Promise<void>;
@@ -51,6 +51,7 @@ export const CardContextProvider = ({
         loadError: error,
         updateCard: updateCard,
         deleteCard: deleteCard,
+        loading: loading,
       }}
     >
       {children}
