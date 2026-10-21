@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import ErrorScreen from "./ErrorScreen";
 import ErrorBanner from "./ErrorBanner";
 import Loader from "./Loader";
+import { Card } from "../types/card";
 
 export default function Display() {
   const context = useContext(CardContext);
@@ -15,6 +16,12 @@ export default function Display() {
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const { role } = useContext(AuthContext);
   const selectedCard = context.cards.find((card) => card.id === context.selectedId);
+  const handleToMap = () => {
+    router.push("/map");
+  };
+  const handleToCars = (card: Card) => {
+    context.setSelectedId(card.id);
+  };
   const handleDelete = async (id: number) => {
     try {
       setDeleteError(null);
@@ -48,7 +55,7 @@ export default function Display() {
               role={role}
               cards={context.cards}
               selectedCardId={context.selectedId}
-              onSelect={(card) => context.setSelectedId(card.id)}
+              onSelect={handleToCars}
               onDelete={handleDelete}
             />
 
@@ -74,9 +81,7 @@ export default function Display() {
                   </p>
                   <button
                     className="rounded-lg bg-amber-500 px-4 py-2 text-slate-900 hover:bg-amber-400 mt-4"
-                    onClick={() => {
-                      router.push("/map");
-                    }}
+                    onClick={handleToMap}
                   >
                     Перейти на карту
                   </button>
