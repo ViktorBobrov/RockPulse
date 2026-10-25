@@ -6,6 +6,9 @@ type ErrorScreenProps = {
 };
 export default function ErrorScreen({ error }: ErrorScreenProps) {
   const router = useRouter();
+  const routerBack = () => {
+    router.back();
+  };
   return (
     <div className="flex min-h-[60vh] w-full items-center justify-center p-4">
       <div className="rounded-2xl max-w-md border border-red-500 bg-slate-800 p-5 shadow-lg sm:p-6">
@@ -13,9 +16,7 @@ export default function ErrorScreen({ error }: ErrorScreenProps) {
 
         <button
           className="rounded-lg bg-amber-500 px-4 py-2 text-slate-900 hover:bg-amber-400"
-          onClick={() => {
-            router.back();
-          }}
+          onClick={routerBack}
         >
           Назад
         </button>

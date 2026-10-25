@@ -10,7 +10,12 @@ export default function LoginPage() {
   const context = useContext(AuthContext);
   const router = useRouter();
   const [error, setError] = useState(false);
-
+  const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLogin(e.target.value);
+  };
+  const handleLoginPass = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const role = loginUser(login, password);
@@ -31,14 +36,14 @@ export default function LoginPage() {
             type="text"
             placeholder="Логин"
             value={login}
-            onChange={(e) => setLogin(e.target.value)}
+            onChange={handleLoginChange}
             className="rounded-xl border border-slate-600 bg-slate-900 px-4 py-3 text-slate-100 placeholder-slate-500 outline-none transition focus:border-amber-500"
           />
           <input
             type="password"
             placeholder="Пароль"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleLoginPass}
             className="rounded-xl border border-slate-600 bg-slate-900 px-4 py-3 text-slate-100 placeholder-slate-500 outline-none transition focus:border-amber-500"
           />
           {error && (

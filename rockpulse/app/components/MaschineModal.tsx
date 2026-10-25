@@ -70,16 +70,18 @@ export default function MaschineModal({
 
     return Object.keys(newErrors).length === 0;
   };
+  const stopPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation();
 
+  const closeModalWindow = () => setIsModalOpen(false);
   const [errorState, setErrorState] = useState<string | null>(null);
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-      onClick={() => setIsModalOpen(false)}
+      onClick={closeModalWindow}
     >
       <div
         className="w-full max-w-md rounded-xl bg-slate-800 p-6 shadow-xl"
-        onClick={(e) => e.stopPropagation()}
+        onClick={stopPropagation}
       >
         <h2 className="mb-4 text-xl font-bold text-white">
           {editingCard ? "Редактировать машину" : "Добавить машину"}
@@ -161,7 +163,7 @@ export default function MaschineModal({
           </div>
         )}
         <button
-          onClick={() => setIsModalOpen(false)}
+          onClick={closeModalWindow}
           className="mt-4 w-full rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-400"
         >
           Закрыть
@@ -177,7 +179,7 @@ export default function MaschineModal({
                   ...form,
                 });
                 setEditingCard(null);
-                setIsModalOpen(false);
+                closeModalWindow();
                 setForm({
                   name: "",
                   hydraulic: 0,
@@ -209,7 +211,7 @@ export default function MaschineModal({
                 });
 
                 setEditingCard(null);
-                setIsModalOpen(false);
+                closeModalWindow();
               } catch {
                 setErrorState("Произошла ошибка при добавлении машины");
               }
