@@ -74,6 +74,54 @@ export default function MaschineModal({
 
   const closeModalWindow = () => setIsModalOpen(false);
   const [errorState, setErrorState] = useState<string | null>(null);
+  const editAddMashine = async () => {
+    if (!validate()) return;
+    if (editingCard) {
+      // РЕДАКТИРОВАНИЕ
+      try {
+        await context.updateCard({
+          ...editingCard,
+          ...form,
+        });
+        setEditingCard(null);
+        closeModalWindow();
+        setForm({
+          name: "",
+          hydraulic: 0,
+          engine: 0,
+          load: 0,
+          status: MachineStatus.WORK,
+        });
+      } catch {
+        setErrorState("Произошла ошибка при редактировании машины");
+      }
+    } else {
+      // ДОБАВЛЕНИЕ
+      try {
+        await context.addCard({
+          name: form.name,
+          id: Date.now(),
+          engine: form.engine,
+          hydraulic: form.hydraulic,
+          load: form.load,
+          status: form.status,
+          position: { x: 0, y: 0 },
+        });
+        setForm({
+          name: "",
+          hydraulic: 0,
+          engine: 0,
+          load: 0,
+          status: MachineStatus.WORK,
+        });
+
+        setEditingCard(null);
+        closeModalWindow();
+      } catch {
+        setErrorState("Произошла ошибка при добавлении машины");
+      }
+    }
+  };
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
@@ -169,54 +217,7 @@ export default function MaschineModal({
           Закрыть
         </button>
         <button
-          onClick={async () => {
-            if (!validate()) return;
-            if (editingCard) {
-              // РЕДАКТИРОВАНИЕ
-              try {
-                await context.updateCard({
-                  ...editingCard,
-                  ...form,
-                });
-                setEditingCard(null);
-                closeModalWindow();
-                setForm({
-                  name: "",
-                  hydraulic: 0,
-                  engine: 0,
-                  load: 0,
-                  status: MachineStatus.WORK,
-                });
-              } catch {
-                setErrorState("Произошла ошибка при редактировании машины");
-              }
-            } else {
-              // ДОБАВЛЕНИЕ
-              try {
-                await context.addCard({
-                  name: form.name,
-                  id: Date.now(),
-                  engine: form.engine,
-                  hydraulic: form.hydraulic,
-                  load: form.load,
-                  status: form.status,
-                  position: { x: 0, y: 0 },
-                });
-                setForm({
-                  name: "",
-                  hydraulic: 0,
-                  engine: 0,
-                  load: 0,
-                  status: MachineStatus.WORK,
-                });
-
-                setEditingCard(null);
-                closeModalWindow();
-              } catch {
-                setErrorState("Произошла ошибка при добавлении машины");
-              }
-            }
-          }}
+          onClick={editAddMashine}
           className="mt-2 w-full rounded-lg bg-amber-500 px-4 py-2 text-slate-900 hover:bg-amber-400"
         >
           Сохранить
