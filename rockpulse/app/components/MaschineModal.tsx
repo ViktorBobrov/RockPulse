@@ -74,6 +74,16 @@ export default function MaschineModal({
 
   const closeModalWindow = () => setIsModalOpen(false);
   const [errorState, setErrorState] = useState<string | null>(null);
+  const handleName = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
+    handleChange("name", e.target.value);
+  const handleChangeEngine = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
+    handleChange("engine", Number(e.target.value));
+  const handleChangeLoad = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
+    handleChange("load", Number(e.target.value));
+  const handleChangeHidraulic = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
+    handleChange("hydraulic", Number(e.target.value));
+  const handleChangeStatus = (e: React.ChangeEvent<HTMLSelectElement, HTMLSelectElement>) =>
+    handleChange("status", e.target.value as MachineStatus);
   const editAddMashine = async () => {
     if (!validate()) return;
     if (editingCard) {
@@ -143,7 +153,7 @@ export default function MaschineModal({
             }`}
             placeholder="Название машины"
             value={form.name}
-            onChange={(e) => handleChange("name", e.target.value)}
+            onChange={handleName}
           />
 
           {errors.name && <span className="text-xs text-red-400">{errors.name}</span>}
@@ -157,7 +167,7 @@ export default function MaschineModal({
             }`}
             type="number"
             value={form.engine}
-            onChange={(e) => handleChange("engine", Number(e.target.value))}
+            onChange={handleChangeEngine}
           />
 
           {errors.engine && <span className="text-xs text-red-400">{errors.engine}</span>}
@@ -171,7 +181,7 @@ export default function MaschineModal({
             }`}
             type="number"
             value={form.load}
-            onChange={(e) => handleChange("load", Number(e.target.value))}
+            onChange={handleChangeLoad}
           />
 
           {errors.load && <span className="text-xs text-red-400">{errors.load}</span>}
@@ -185,7 +195,7 @@ export default function MaschineModal({
             }`}
             type="number"
             value={form.hydraulic}
-            onChange={(e) => handleChange("hydraulic", Number(e.target.value))}
+            onChange={handleChangeHidraulic}
           />
 
           {errors.hydraulic && <span className="text-xs text-red-400">{errors.hydraulic}</span>}
@@ -196,7 +206,7 @@ export default function MaschineModal({
           <select
             className="w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-white focus:border-amber-500 focus:outline-none"
             value={form.status}
-            onChange={(e) => handleChange("status", e.target.value as MachineStatus)}
+            onChange={handleChangeStatus}
           >
             {Object.values(MachineStatus).map((status) => (
               <option key={status} value={status}>
