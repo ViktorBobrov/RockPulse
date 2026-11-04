@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { memo } from "react";
 import { Card } from "../types/card";
 import { statusConfig } from "../types/statusConfig";
 import { UserRole } from "../types/userRole";
+
 type MachineCardProps = {
   role: UserRole | null;
   card: Card;
@@ -11,14 +12,7 @@ type MachineCardProps = {
   onDelete: (id: number) => void;
   isSelected: boolean;
 };
-export default function MachineCard({
-  role,
-  card,
-  onSelect,
-  onEdit,
-  onDelete,
-  isSelected,
-}: MachineCardProps) {
+function MachineCard({ role, card, onSelect, onEdit, onDelete, isSelected }: MachineCardProps) {
   const clickOnCard = () => {
     onSelect(card);
   };
@@ -63,3 +57,4 @@ export default function MachineCard({
     </div>
   );
 }
+export default memo(MachineCard);

@@ -1,6 +1,6 @@
 "use client";
 import { CardContext } from "@/contexts/CardContext";
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import MaschineList from "./MachineList";
 import { statusConfig } from "../types/statusConfig";
 import { AuthContext } from "@/contexts/AuthContext";
@@ -13,26 +13,32 @@ import { Card } from "../types/card";
 export default function Display() {
   const context = useContext(CardContext);
   const router = useRouter();
+  const { setSelectedId, deleteCard } = context;
+
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const { role } = useContext(AuthContext);
   const selectedCard = context.cards.find((card) => card.id === context.selectedId);
   const handleToMap = () => {
     router.push("/map");
   };
-  const handleToCars = (card: Card) => {
-    context.setSelectedId(card.id);
-  };
-  const handleDelete = async (id: number) => {
-    try {
-      setDeleteError(null);
-      await context.deleteCard(id);
-      if (context.selectedId === id) {
-        context.setSelectedId(null);
+  const handleToCars = useCallback(
+    (card: Card) => {
+      setSelectedId(card.id);
+    },
+    [setSelectedId],
+  );
+  const handleDelete = useCallback(
+    async (id: number) => {
+      try {
+        setDeleteError(null);
+        await deleteCard(id);
+        setSelectedId((prev) => (prev === id ? null : prev));
+      } catch {
+        setDeleteError("Не удалось удалить машину");
       }
-    } catch {
-      setDeleteError("Не удалось удалить машину");
-    }
-  };
+    },
+    [deleteCard, setSelectedId],
+  );
 
   return (
     <React.Fragment>

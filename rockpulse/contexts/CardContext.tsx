@@ -1,7 +1,7 @@
 "use client";
 import { Card } from "@/app/types/card";
 
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useCallback, useState } from "react";
 
 import { createMachine } from "@/app/serverMock/services/machineService";
 import { updateMachine } from "@/app/serverMock/services/machineService";
@@ -37,10 +37,13 @@ export const CardContextProvider = ({
     await updateMachine(machine);
     setData((prev) => (prev ?? []).map((card) => (card.id === machine.id ? machine : card)));
   };
-  const deleteCard = async (id: number) => {
-    await deleteMachine(id);
-    setData((prev) => (prev ?? []).filter((card) => card.id !== id));
-  };
+  const deleteCard = useCallback(
+    async (id: number) => {
+      await deleteMachine(id);
+      setData((prev) => (prev ?? []).filter((card) => card.id !== id));
+    },
+    [setData],
+  );
   return (
     <CardContext.Provider
       value={{

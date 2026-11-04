@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import MaschineModal from "./MaschineModal";
 import MachineCard from "./MachineCard";
 import { MachineStatus } from "../types/status";
@@ -42,7 +42,7 @@ export default function MaschineList({
     });
     setIsModalOpen(true);
   };
-  const onEditMachineClick = (card: Card) => {
+  const onEditMachineClick = useCallback((card: Card) => {
     setEditingCard(card);
     setForm({
       name: card.name,
@@ -52,7 +52,7 @@ export default function MaschineList({
       status: card.status,
     });
     setIsModalOpen(true);
-  };
+  }, []);
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-800 p-4 shadow-lg">
       {cards.map((card) => (
