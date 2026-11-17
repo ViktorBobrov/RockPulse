@@ -6,14 +6,15 @@
 
 ## Tech Stack
 
-| Технология | Версия |
-|---|---|
+| Технология           | Версия |
+| -------------------- | ------ |
 | Next.js (App Router) | 16.1.6 |
-| React | 19 |
-| TypeScript | 5 |
-| Tailwind CSS | 4 |
-| React Leaflet | 5 |
-| Leaflet | 1.9 |
+| React                | 19     |
+| TypeScript           | 5      |
+| Tailwind CSS         | 4      |
+| React Leaflet        | 5      |
+| Leaflet              | 1.9    |
+| Jest                 | 30     |
 
 ---
 
@@ -28,7 +29,7 @@
 
 ```bash
 git clone https://github.com/ViktorBobrov/RockPulse.git
-cd rockpulse/rockpulse
+cd RockPulse/rockpulse
 npm install
 ```
 
@@ -39,6 +40,8 @@ npm run dev      # Разработка — http://localhost:3000
 npm run build    # Сборка для продакшена
 npm run start    # Запуск продакшен-сборки
 npm run lint     # Проверка ESLint
+npm test         # Тесты Jest
+npm run format   # Форматирование Prettier
 ```
 
 ---
@@ -52,16 +55,23 @@ rockpulse/
 │   │   ├── map/             # Страница карты с геолокацией машин
 │   │   ├── layout.tsx
 │   │   └── page.tsx         # Главная страница — монитор механика
+│   ├── api/
+│   │   └── machines/route.ts # GET, POST, PUT, DELETE списка машин
 │   ├── components/
-│   │   ├── display.tsx      # Основной дашборд со списком и деталями машины
+│   │   ├── Display.tsx      # Основной дашборд со списком и деталями машины
+│   │   ├── ErrorBanner.tsx  # Баннер ошибки внутри формы
+│   │   ├── ErrorScreen.tsx  # Экран, если список машин не загрузился
+│   │   ├── Loader.tsx       # Индикатор загрузки
 │   │   ├── MachineCard.tsx  # Карточка машины в списке
 │   │   ├── MachineList.tsx  # Список всех машин
-│   │   ├── MaschineModal.tsx# Модальное окно добавления машины
+│   │   ├── MaschineModal.tsx # Модальное окно добавления и редактирования машины
 │   │   ├── MashineMap.tsx   # Карта с маркерами машин (Leaflet)
 │   │   ├── Navbar.tsx       # Навигационная панель
 │   │   └── ProtectedRoute.tsx # HOC для защиты маршрутов
+│   ├── hooks/
+│   │   └── useFetch.ts      # Хук загрузки: data, error, loading
 │   ├── login/               # Страница авторизации
-│   ├── serverMock/          # Моковые данные (заглушка сервера)
+│   ├── serverMock/          # Стартовые данные и функции запросов к /api
 │   ├── types/               # TypeScript типы (Card, Status, UserRole и др.)
 │   └── layout.tsx           # Корневой лейаут приложения
 ├── contexts/
@@ -70,6 +80,8 @@ rockpulse/
 ├── public/                  # Статические файлы
 ├── next.config.ts
 ├── tsconfig.json
+├── jest.config.ts           # Настройка Jest
+├── jest.setup.ts            # Подключение матчеров Testing Library
 └── eslint.config.mjs
 ```
 
@@ -80,5 +92,5 @@ rockpulse/
 - **Авторизация** — ролевая модель доступа (`UserRole`), сессия хранится в `localStorage`
 - **Список машин** — просмотр статуса, температуры двигателя, гидравлики и нагрузки
 - **Карта** — отображение геолокации выбранной машины через React Leaflet
-- **Управление** — добавление и удаление машин (для авторизованных ролей)
+- **Управление** — добавление, редактирование и удаление машин для роли `ADMIN`
 - **Защищённые маршруты** — редирект на `/login` для неавторизованных пользователей
